@@ -19,11 +19,24 @@ describe("Component: SelectList", () => {
       },
     ];
 
-    render(<SelectList data={data} onChange={() => {}} onPress={() => {}} />);
+    const onPress = jest.fn();
+
+    render(<SelectList data={data} onChange={() => {}} onPress={onPress} />);
 
     // const selectedCity = screen.getByText(data[0].name);
     // const selectedCity = screen.getByText(/sobral/i);
     const selectedCity = screen.getByText("Sobral", { exact: false });
+
     fireEvent.press(selectedCity);
+
+    // expect(onPress).toHaveBeenCalledTimes(1);
+    expect(onPress).toHaveBeenCalledWith(data[1]);
+  });
+
+  it("Should not show options when data props is empty", () => {
+    render(<SelectList data={[]} onChange={() => {}} onPress={() => {}} />);
+
+    const options = screen.getByTestId("options");
+    expect(options.children).toHaveLength(0);
   });
 });
