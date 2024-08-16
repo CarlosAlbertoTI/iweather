@@ -8,5 +8,8 @@
     "^.+\\.jsx?$": "babel-jest",
     "^.+\\.svg$": "jest-transformer-svg"
   },
-  "setupFiles": ["./__tests__/mocks/libs/async-storage.js"]
+  "setupFiles": [
+    "./__tests__/mocks/libs/async-storage.js",
+    "./__tests__/mocks/libs/react-native-safe-area-context.js"
+  ]
 }
