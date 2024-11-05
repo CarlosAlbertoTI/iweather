@@ -13,21 +13,22 @@ import { Dashboard } from "@screens/Dashboard";
 import { api } from "@services/api";
 
 describe("Screen: Dashboard", () => {
-  it("should be show city weather", async () => {
-    jest.spyOn(api, "get").mockResolvedValue({ data: mockWeatherAPIResponse });
-
+  beforeAll(async () => {
     const city = {
       id: "1",
       name: "Rio do Sul",
       latitude: 123,
       longitude: 123,
     };
-
     await saveStorageCity(city);
+  });
+
+  it("should be show city weather", async () => {
+    jest.spyOn(api, "get").mockResolvedValue({ data: mockWeatherAPIResponse });
 
     const { debug } = render(<Dashboard />);
 
-    const cityName = await waitFor(() => screen.getByText(city.name));
+    const cityName = await waitFor(() => screen.getByText(/rio do sul/i));
     expect(cityName).toBeTruthy();
   });
 
